@@ -7,11 +7,15 @@ import java.util.List;
 @Service
 public class UserServices {
     private List<User> userList = new ArrayList<>();
+    private Long nextid=1L;
+    //adding the user
+    public void  addUsers(User user) {
+        user.setId(nextid++);
+        userList.add(user);
+    }
+    //fetching the users
     public List<User> fetchAllUsers() {
         return userList;
     }
-    public List<User> addUsers(User user) {
-        userList.add(user);
-        return userList;
-    }
+
 }
