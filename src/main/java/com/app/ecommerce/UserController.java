@@ -24,7 +24,7 @@ public class UserController {
         return userService.fetchUser(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(()->ResponseEntity.notFound().build());
-        //nnn
+
 //        User user=userService.fetchUser(id);
 //        if(user==null){
 //            return ResponseEntity.notFound().build();
@@ -36,4 +36,14 @@ public class UserController {
         userService.addUsers(user);
         return ResponseEntity.ok( "user added successfully");
     }
+    @PutMapping("/api/users/{id}")
+    public ResponseEntity<String> UpdateUsers(@PathVariable Long id,@RequestBody User updatedUser) {
+        boolean updated=userService.UpdateUsers(updatedUser, id);
+        if (updated){
+            return ResponseEntity.ok( "user added successfully");
+
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }

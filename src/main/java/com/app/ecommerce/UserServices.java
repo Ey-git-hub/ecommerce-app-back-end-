@@ -15,6 +15,19 @@ public class UserServices {
         user.setId(nextid++);
         userList.add(user);
     }
+    //update the user
+    public boolean  UpdateUsers(User updateUser,Long id) {
+       return userList.stream()
+               .filter(user -> user.getId().equals(id))
+               .findFirst()
+               .map(existingUser->{
+                   existingUser.setFirstName(updateUser.getFirstName());
+                   existingUser.setLastName(updateUser.getLastName());
+                   return true;
+
+               }).orElse(false);
+
+    }
     //fetching the users
     public List<User> fetchAllUsers() {
         return userList;
