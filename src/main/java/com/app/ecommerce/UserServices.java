@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserServices {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     //    private List<User> userList = new ArrayList<>();
 //    private Long nextid=1L;
