@@ -26,8 +26,11 @@ public class ProductController {
                 .orElseGet(()->ResponseEntity.notFound().build());
     }
     @GetMapping
-    public List<ResponseEntity<ProductResponse>> getAllProduct(){
+    public ResponseEntity<List<ProductResponse>> getAllProduct(){
         return ResponseEntity.ok(productService.getAllProducts());
     }
-
+    @DeleteMapping("/id")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id){
+        productService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
 }

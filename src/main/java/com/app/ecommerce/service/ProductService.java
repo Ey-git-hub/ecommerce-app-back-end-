@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -53,6 +54,14 @@ public class ProductService {
     }
 
     public List<ProductResponse> getAllProducts() {
-        productRepository.findByActiveTrue();
+        productRepository.findByActiveTrue().stream()
+                .map(this::mapToProductResponse)
+                .collect(Collectors.toList());
+    }
+
+    public void deleteProduct(Long id) {
+    Product product =productRepository.findById(id)
+            .orElseThrow(()-> new RuntimeException("Product not found"));
+    product.setActive(false);
     }
 }
