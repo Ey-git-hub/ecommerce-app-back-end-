@@ -7,6 +7,8 @@ import com.app.ecommerce.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -40,12 +42,12 @@ public class ProductService {
     }
 
 
-    public ProductResponse updateProduct(Long id, ProductRequest productRequest) {
+    public Optional<ProductResponse> updateProduct(Long id, ProductRequest productRequest) {
         return productRepository.findById(id)
                 .map(existingProduct-> {
                     updateProductFromRequest(existingProduct, productRequest);
                     Product savedProduct=productRepository.save(existingProduct);
                     return mapToProductResponse(savedProduct);
-                }).orElseThrow(()-> new RuntimeException("product not found: "+id));
+                });
     }
 }
