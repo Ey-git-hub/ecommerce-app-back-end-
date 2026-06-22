@@ -17,11 +17,35 @@ public class ProductService {
         Product savedProduct=productRepository.save(product);
         return mapToProductResponse(savedProduct);
     }
-
+//from the saved product to response
     private ProductResponse mapToProductResponse(Product savedProduct) {
-
+     ProductResponse response=new ProductResponse();
+     response.setId(savedProduct.getId());
+     response.setName(savedProduct.getName());
+     response.setCategory(savedProduct.getCategory());
+     response.setDescription(savedProduct.getDescription());
+     response.setPrice(savedProduct.getPrice());
+     response.setImageUrl(savedProduct.getImageUrl());
+     response.setStockQuantity(savedProduct.getStockQuantity());
+     return response;
+    }
+//from request to product
+    private void updateProductFromRequest(Product product, ProductRequest productRequest) {
+        product.setName(productRequest.getName());
+        product.setCategory(productRequest.getCategory());
+        product.setDescription(productRequest.getDescription());
+        product.setPrice(productRequest.getPrice());
+        product.setImageUrl(productRequest.getImageUrl());
+        product.setStockQuantity(productRequest.getStockQuantity());
     }
 
-    private void updateProductFromRequest(Product product, ProductRequest productRequest) {
+
+    public ProductResponse updateProduct(Long id, ProductRequest productRequest) {
+        return productRepository.findById(id)
+                .map(existingProduct-> {
+                    updateProductFromRequest(existingProduct, productRequest);
+                    Product savedProduct=productRepository.save(existingProduct);
+                    return mapToProductResponse(savedProduct);
+                }).orElseThrow(()-> new RuntimeException("product not found: "+id));
     }
 }
