@@ -36,5 +36,5 @@ public class ProductController {
 }
     @GetMapping("/id")
     public ResponseEntity<List<ProductResponse>> searchProduct(@RequestParam String keyword){
-     return ResponseEntity.ok(productService.serachProducts(keyword));}
+     return ResponseEntity.ok(productService.searchProducts(keyword));}
 }
